@@ -1,17 +1,98 @@
-research_task:
+scan_repository:
   description: >
-    Conduct a thorough research about {topic}
-    Make sure you find any interesting and relevant information given
-    the current year is {current_year}.
+    Scan the repository to:
+    - Identify folder structure
+    - Detect programming languages
+    - Locate entry points (main files, app starters)
+    - Identify config files
+    - Identify dependency manifests
+    - Produce a structured JSON-style summary
   expected_output: >
-    A list with 10 bullet points of the most relevant information about {topic}
-  agent: researcher
+    A structured summary including:
+    - total_files_scanned
+    - main_directories
+    - detected_languages
+    - entry_points
+    - config_files
+    - dependency_files
+  agent: code_scanner
 
-reporting_task:
+analyze_architecture:
   description: >
-    Review the context you got and expand each topic into a full section for a report.
-    Make sure the report is detailed and contains any and all relevant information.
+    Using the repository scan results, determine:
+    - Architecture type (monolith, modular monolith, microservices)
+    - Major modules or bounded contexts
+    - How components or services interact
+    - Identified design patterns (MVC, layered, hexagonal, etc.)
+    - The likely runtime execution flow of the application
   expected_output: >
-    A fully fledged report with the main topics, each with a full section of information.
-    Formatted as markdown without '```'
-  agent: reporting_analyst
+    A structured architecture summary including:
+    - architecture_type
+    - key_modules
+    - service_interactions
+    - detected_design_patterns
+    - runtime_flow_summary
+  agent: architecture_analyst
+  depends_on:
+    - scan_repository
+
+security_analysis:
+  description: >
+    Review the scanned repository data to identify:
+    - Hardcoded secrets or credentials
+    - Insecure configuration practices
+    - Weak or missing authentication and authorization
+    - Unsafe or publicly exposed endpoints
+    - Common vulnerability patterns (OWASP Top 10)
+    Provide severity and recommended fixes.
+  expected_output: >
+    A structured security report including:
+    - issue_description
+    - severity (Low/Medium/High)
+    - affected_files
+    - recommended_fix
+  agent: security_analyst
+  depends_on:
+    - scan_repository
+
+performance_analysis:
+  description: >
+    Analyze the scanned repository data to identify:
+    - Performance bottlenecks and inefficient code paths
+    - Heavy synchronous or blocking operations
+    - Missing pagination in APIs or data access
+    - Missing caching opportunities
+    - Scalability risks under increased load
+  expected_output: >
+    A structured performance report including:
+    - bottleneck_description
+    - likely_symptoms (latency, CPU, memory, throughput)
+    - affected_files_or_modules
+    - recommended_optimization
+  agent: performance_analyst
+  depends_on:
+    - scan_repository
+
+plan_roadmap:
+  description: >
+    Consolidate architecture, security, and performance findings
+    to create a prioritized improvement roadmap.
+    Categorize items into immediate, short-term, and medium-term.
+    Each item must include priority, impact, effort, risk,
+    and justification.
+  expected_output: >
+    A structured roadmap including:
+    - priority (P0/P1/P2)
+    - task_description
+    - impact
+    - effort_estimate
+    - risk
+    - justification
+  agent: roadmap_planner
+  depends_on:
+    - analyze_architecture
+    - security_analysis
+    - performance_analysis
+
+
+
