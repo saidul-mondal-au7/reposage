@@ -1,64 +1,111 @@
 from crewai import Agent, Crew, Process, Task
-from crewai.project import CrewBase, agent, crew, task
+from crewai.project import CrewBase, agent, task
 from crewai.agents.agent_builder.base_agent import BaseAgent
-from typing import List
-# If you want to run a snippet of code before or after the crew starts,
-# you can use the @before_kickoff and @after_kickoff decorators
-# https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
+
+from typing import List, Dict
+from pydantic import BaseModel, Field
+
+# --------- Tools (Agent-1) ----------
+from reposage.tools.repo_cloner import clone_repo
+from reposage.tools.file_scanner import scan_repository
+from reposage.tools.file_classifier import classify_files
+from reposage.tools.language_detector import detect_languages
+
+from pathlib import Path
+
+class ScanRepositoryOutput(BaseModel):
+    repo_path: str
+    total_files_scanned: int
+    main_directories: List[str]
+    detected_languages: List[str]
+    entry_points: List[str]
+    config_files: List[str]
+    dependency_files: List[str]
+    file_summaries: Dict[str, str]
+
 
 @CrewBase
-class Reposage():
-    """Reposage crew"""
+class RepoSageCrew:
+    """
+    Crew definition for RepoSage.
+    Agents and tasks are loaded from YAML.
+    """
 
     agents: List[BaseAgent]
     tasks: List[Task]
 
-    # Learn more about YAML configuration files here:
-    # Agents: https://docs.crewai.com/concepts/agents#yaml-configuration-recommended
-    # Tasks: https://docs.crewai.com/concepts/tasks#yaml-configuration-recommended
-    
-    # If you would like to add tools to your agents, you can learn more about it here:
-    # https://docs.crewai.com/concepts/agents#agent-tools
-    @agent
-    def researcher(self) -> Agent:
-        return Agent(
-            config=self.agents_config['researcher'], # type: ignore[index]
-            verbose=True
-        )
+    # ================================
+    # AGENTS
+    # ================================
 
     @agent
-    def reporting_analyst(self) -> Agent:
-        return Agent(
-            config=self.agents_config['reporting_analyst'], # type: ignore[index]
-            verbose=True
-        )
+    def code_scanner(self):
+        """
+        Code Scanner Agent:
+        Responsible for cloning (if needed) and scanning the repo.
+        """
+        return {
+            "tools": [
+                clone_repo,
+                scan_repository,
+                classify_files,
+                detect_languages,
+            ]
+        }
 
-    # To learn more about structured task outputs,
-    # task dependencies, and task callbacks, check out the documentation:
-    # https://docs.crewai.com/concepts/tasks#overview-of-a-task
+    @agent
+    def architecture_analyst(self):
+        return {}
+
+    @agent
+    def security_analyst(self):
+        return {}
+
+    @agent
+    def performance_analyst(self):
+        return {}
+
+    @agent
+    def roadmap_planner(self):
+        return {}
+
+    # ================================
+    # TASKS
+    # ================================
+
     @task
-    def research_task(self) -> Task:
+    def scan_repository(self) -> Task:
+
         return Task(
-            config=self.tasks_config['research_task'], # type: ignore[index]
+        config=self.tasks_config['scan_repository'],  # YAML-driven
+        agent=self.code_scanner(),
+        output_pydantic=ScanRepositoryOutput,
         )
 
     @task
-    def reporting_task(self) -> Task:
-        return Task(
-            config=self.tasks_config['reporting_task'], # type: ignore[index]
-            output_file='report.md'
-        )
+    def analyze_architecture(self):
+        pass
 
-    @crew
-    def crew(self) -> Crew:
-        """Creates the Reposage crew"""
-        # To learn how to add knowledge sources to your crew, check out the documentation:
-        # https://docs.crewai.com/concepts/knowledge#what-is-knowledge
+    @task
+    def security_analysis(self):
+        pass
 
+    @task
+    def performance_analysis(self):
+        pass
+
+    @task
+    def plan_roadmap(self):
+        pass
+
+    # ================================
+    # CREW
+    # ================================
+
+    def crew(self):
         return Crew(
-            agents=self.agents, # Automatically created by the @agent decorator
-            tasks=self.tasks, # Automatically created by the @task decorator
-            process=Process.sequential,
+            agents=self.agents,
+            tasks=self.tasks,
             verbose=True,
-            # process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
         )
+
