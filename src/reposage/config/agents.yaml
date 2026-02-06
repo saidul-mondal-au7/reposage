@@ -10,6 +10,7 @@ code_scanner:
     large, unfamiliar codebases safely and efficiently.
     You understand multi-language projects and can infer
     application structure from files and folders.
+  model: openai/gpt-4o-mini
 
 architecture_analyst:
   role: >
@@ -24,6 +25,7 @@ architecture_analyst:
     Python, Java, Node.js, and JVM ecosystems.
     You can infer runtime behavior and architecture
     from folder structure and conventions.
+  model: openai/gpt-4o-mini
 
 security_analyst:
   role: Security Engineer
@@ -37,7 +39,8 @@ security_analyst:
     secure coding practices across backend systems.
     You can infer security risks from code structure
     and common implementation patterns.
-  allow_delegation: false
+  model: openai/gpt-4o-mini
+  # allow_delegation: false
 
 performance_analyst:
   role: Performance Engineer
@@ -52,6 +55,7 @@ performance_analyst:
     high-traffic systems. You can infer performance
     and scalability issues from code structure,
     data access patterns, and API design.
+  model: openai/gpt-4o-mini
   allow_delegation: false
 
 roadmap_planner:
@@ -65,5 +69,6 @@ roadmap_planner:
     technical debt, delivery timelines, risk, and impact.
     You excel at converting technical findings into
     clear execution plans with priorities and effort estimates.
-  allow_delegation: false
+  # allow_delegation: false
+  model: openai/gpt-4o-mini
 

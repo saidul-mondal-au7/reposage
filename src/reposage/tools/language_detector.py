@@ -1,5 +1,6 @@
 from collections import defaultdict
 import os
+from crewai.tools import tool
 
 EXTENSION_LANGUAGE_MAP = {
     ".py": "Python",
@@ -11,7 +12,12 @@ EXTENSION_LANGUAGE_MAP = {
     ".php": "PHP",
 }
 
+@tool("detect_languages")
 def detect_languages(files: list[str]) -> list[str]:
+    """
+    Detect programming languages used in the repository by
+    analyzing file extensions and mapping them to known languages.
+    """
     counter = defaultdict(int)
 
     for f in files:

@@ -1,4 +1,5 @@
 import os
+from crewai.tools import tool
 
 ENTRY_POINT_HINTS = {
     "main.py", "app.py", "server.py", "index.js",
@@ -15,7 +16,12 @@ DEPENDENCY_FILES = {
     "build.gradle"
 }
 
+@tool("classify_files")
 def classify_files(files: list[str]) -> dict:
+    """
+    Classify repository files into entry points, configuration files,
+    and dependency/manifest files based on file names and extensions.
+    """
     entry_points = []
     config_files = []
     dependency_files = []

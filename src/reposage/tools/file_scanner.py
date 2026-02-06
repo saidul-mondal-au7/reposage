@@ -1,10 +1,12 @@
 import os
+from crewai.tools import tool
 
 IGNORE_DIRS = {
     ".git", "node_modules", "dist", "build",
     "__pycache__", ".venv", "venv"
 }
 
+@tool("scan_repository")
 def scan_repository(root_path: str) -> list[str]:
     """
     Recursively scan repository and return list of file paths.

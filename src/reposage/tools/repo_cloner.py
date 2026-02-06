@@ -1,6 +1,8 @@
 import os
+from crewai.tools import tool
 import subprocess
 
+@tool("clone_repo")
 def clone_repo(repo_url: str, base_dir: str = "repos") -> str:
     """
     Clone a GitHub repository if not already present.
