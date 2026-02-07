@@ -20,7 +20,6 @@ scan_repository:
 
   inputs:
     repo: "{{ repo }}"
-    path: "{{ path }}"
 
   agent: code_scanner
 
