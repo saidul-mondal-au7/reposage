@@ -6,6 +6,8 @@ from pathlib import Path
 from reposage.crew import RepoSageCrew
 from reposage.output.summary_generator import generate_summary_json
 from reposage.output.report_generator import generate_report_md
+# from reposage.output.report_pdf_generator import generate_report_pdf
+
 from reposage.output.normalize_output import normalize_output
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
@@ -90,6 +92,15 @@ def run():
         outputs.get("plan_roadmap"),
         output_path=out_dir / "report.md",
     )
+
+    # generate_report_pdf(
+    #     outputs["scan_repository"],
+    #     outputs["analyze_architecture"],
+    #     outputs["security_analysis"],
+    #     outputs["performance_analysis"],
+    #     outputs["plan_roadmap"],
+    # )
+
 
     print("\n✅ RepoSage execution completed")
     print(f"📄 Outputs written to: {out_dir.resolve()}\n")

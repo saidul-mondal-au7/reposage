@@ -3,6 +3,10 @@ from pathlib import Path
 import json
 from pydantic import BaseModel
 
+# from reposage.health.scorer import calculate_health_score
+# from reposage.health.badge import health_badge
+
+
 
 # ==========================================================
 # Safe coercion (CrewAI 1.9.3 compatible)

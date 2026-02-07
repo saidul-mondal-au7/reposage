@@ -29,16 +29,5 @@
   },
   "top_security_risks": [],
   "top_performance_risks": [],
-  "top_roadmap_items": [
-    {
-      "priority": "P1",
-      "task": "Document detailed module interactions and data flow between knowledge, memory, and embeddings modules",
-      "effort": "Low"
-    },
-    {
-      "priority": "P1",
-      "task": "Implement automated loading verification for YAML configuration files (agents.yaml, tasks.yaml)",
-      "effort": "Medium"
-    }
-  ]
+  "top_roadmap_items": []
 }

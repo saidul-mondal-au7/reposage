@@ -2,7 +2,6 @@ import json
 from pathlib import Path
 from pydantic import BaseModel
 
-
 def _force_dict(obj):
     """
     CrewAI 1.9.3–safe coercion:

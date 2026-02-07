@@ -1,54 +1,135 @@
-# Reposage Crew
+# Reposage — AI-Powered Repository Analysis Engine
 
-Welcome to the Reposage Crew project, powered by [crewAI](https://crewai.com). This template is designed to help you set up a multi-agent AI system with ease, leveraging the powerful and flexible framework provided by crewAI. Our goal is to enable your agents to collaborate effectively on complex tasks, maximizing their collective intelligence and capabilities.
+Reposage is a CrewAI-based multi-agent system that analyzes any code repository and automatically generates:
+
+- Architecture insights
+- Security risk analysis
+- Performance bottleneck detection
+- Prioritized engineering roadmap
+- Reports in JSON, Markdown, and PDF formats
+
+It supports:
+- GitHub repositories
+- Local folders
+- CLI execution
+- CI/CD pipelines
+
+---
+
+## Features
+
+- Multi-agent analysis using CrewAI
+- Automatic repo cloning or local scanning
+- Architecture detection (monolith / modular monolith / microservices)
+- Security and performance risk detection
+- Engineering roadmap generation (P0 / P1 / P2)
+- Output formats:
+  - `summary.json`
+  - `report.md`
+
+---
+
+## System Requirements
+
+- Python >= 3.10 and < 3.14
+- Git installed
+- macOS / Linux / Windows
+- Internet access (for LLM calls)
+
+---
 
 ## Installation
 
-Ensure you have Python >=3.10 <3.14 installed on your system. This project uses [UV](https://docs.astral.sh/uv/) for dependency management and package handling, offering a seamless setup and execution experience.
+### 1. Clone the repository
 
-First, if you haven't already, install uv:
+# Reposage — AI-Powered Repository Analysis Engine
 
-```bash
-pip install uv
-```
+Reposage is a CrewAI-based multi-agent system that analyzes any code repository and automatically generates:
 
-Next, navigate to your project directory and install the dependencies:
+- Architecture insights
+- Security risk analysis
+- Performance bottleneck detection
+- Prioritized engineering roadmap
+- Reports in JSON, Markdown, and PDF formats
 
-(Optional) Lock the dependencies and install them by using the CLI command:
-```bash
-crewai install
-```
-### Customizing
+It supports:
+- GitHub repositories
+- Local folders
+- CLI execution
+- CI/CD pipelines
 
-**Add your `OPENAI_API_KEY` into the `.env` file**
+---
 
-- Modify `src/reposage/config/agents.yaml` to define your agents
-- Modify `src/reposage/config/tasks.yaml` to define your tasks
-- Modify `src/reposage/crew.py` to add your own logic, tools and specific args
-- Modify `src/reposage/main.py` to add custom inputs for your agents and tasks
+## Features
 
-## Running the Project
+- Multi-agent analysis using CrewAI
+- Automatic repo cloning or local scanning
+- Architecture detection (monolith / modular monolith / microservices)
+- Security and performance risk detection
+- Engineering roadmap generation (P0 / P1 / P2)
+- Output formats:
+  - `summary.json`
+  - `report.md`
 
-To kickstart your crew of AI agents and begin task execution, run this from the root folder of your project:
+---
 
-```bash
-$ crewai run
-```
+## System Requirements
 
-This command initializes the reposage Crew, assembling the agents and assigning them tasks as defined in your configuration.
+- Python >= 3.10 and < 3.14
+- Git installed
+- macOS / Linux / Windows
+- Internet access (for LLM calls)
 
-This example, unmodified, will run the create a `report.md` file with the output of a research on LLMs in the root folder.
+---
 
-## Understanding Your Crew
+## Installation
 
-The reposage Crew is composed of multiple AI agents, each with unique roles, goals, and tools. These agents collaborate on a series of tasks, defined in `config/tasks.yaml`, leveraging their collective skills to achieve complex objectives. The `config/agents.yaml` file outlines the capabilities and configurations of each agent in your crew.
+### 1. Clone the repository
+- git clone https://github.com/saidul-mondal-au7/reposage.git
+- cd reposage
+## set up
+- python -m venv venv
+- source venv/bin/activate
 
-## Support
+- pip install crewai
+- pip install -r ../requirements.txt
 
-For support, questions, or feedback regarding the Reposage Crew or crewAI.
-- Visit our [documentation](https://docs.crewai.com)
-- Reach out to us through our [GitHub repository](https://github.com/joaomdmoura/crewai)
-- [Join our Discord](https://discord.com/invite/X4JWnZnxPb)
-- [Chat with our docs](https://chatg.pt/DWjSBZn)
+## command
 
-Let's create wonders together with the power and simplicity of crewAI.
+- python -m reposage.main --repo https://github.com/saidul-mondal-au7/rag_medical_chatbot.git 
+or
+- python -m reposage.main --path ./my-local-repo
+
+### Folder structure
+
+reposage/
+├── src/reposage/
+│   ├── config/
+│   │   ├── agents.yaml
+│   │   └── tasks.yaml
+│   ├── tools/
+│   ├── output/
+│   │   ├── summary_generator.py
+│   │   ├── report_generator.py
+│   │   
+│   ├── crew.py
+│   └── main.py
+├── outputs/
+│   ├── summary.json
+│   ├── report.md
+│   
+├── .env
+├── pyproject.toml
+└── README.md
+|__requirements.txt
+
+
+
+
+
+
+
+
+
+
+
