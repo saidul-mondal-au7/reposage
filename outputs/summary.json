@@ -1,0 +1,28 @@
+{
+  "repo_name": "rag_medical_chatbot",
+  "repo_path": "/Users/saidulmondal/Desktop/profit_pilot/repoInsight/reposage/repos/rag_medical_chatbot",
+  "detected_languages": [
+    "Python"
+  ],
+  "architecture_type": "monolith",
+  "repo_health": {
+    "total_files_scanned": 15,
+    "entry_points": [
+      "app.py"
+    ],
+    "main_directories": [
+      ".github",
+      "data",
+      "src",
+      "static",
+      "templates",
+      "workflows"
+    ],
+    "dependency_files": [
+      "requirements.txt"
+    ]
+  },
+  "top_security_risks": [],
+  "top_performance_risks": [],
+  "top_roadmap_items": []
+}

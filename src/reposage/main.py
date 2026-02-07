@@ -1,51 +1,58 @@
 #!/usr/bin/env python
-import sys
 import warnings
 
-from datetime import datetime
-
 from reposage.crew import RepoSageCrew
+from reposage.output.summary_generator import generate_summary_json
+from reposage.output.report_generator import generate_report_md
+from reposage.output.normalize_output import normalize_output
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 
-from reposage.output.summary_generator import generate_summary_json
-from reposage.output.report_generator import generate_report_md
 
 def run():
-    """
-    Run the crew.
-    """
     inputs = {
-        "repo": "https://github.com/saidul-mondal-au7/reposage"
+        "repo": "https://github.com/saidul-mondal-au7/rag_medical_chatbot.git"
     }
 
+    # crew = RepoSageCrew().crew()
+    # result = crew.kickoff(inputs=inputs)
+    result = RepoSageCrew().crew().kickoff(inputs=inputs)
 
-    try:
-        crew = RepoSageCrew().crew()
-        result = crew.kickoff(inputs=inputs)
-        # result = RepoSageCrew().kickoff(inputs=inputs)
+    print("result:", result)
 
 
-        generate_summary_json(
-        result["scan_repository"],
-        result["analyze_architecture"],
-        result["security_analysis"],
-        result["performance_analysis"],
-        result["plan_roadmap"],
-        )
+    # ✅ Correct CrewAI 1.9.3 output extraction
+    outputs = {}
 
-        generate_report_md(
-            result["scan_repository"],
-            result["analyze_architecture"],
-            result["security_analysis"],
-            result["performance_analysis"],
-            result["plan_roadmap"],
-        )
+    for task_output in result.tasks_output:
+        outputs[task_output.name] = normalize_output(task_output.raw)
 
-        print("\nCrew execution completed successfully.\n")
-        return result
-    except Exception as e:
-        raise
+    print("OUTPUT KEYS:", outputs.keys())
+    print("SCAN OUTPUT:", outputs["scan_repository"])
+
+
+    # ✅ Generate artifacts
+    generate_summary_json(
+        outputs["scan_repository"],
+        outputs["analyze_architecture"],
+        outputs["security_analysis"],
+        outputs["performance_analysis"],
+        outputs["plan_roadmap"],
+    )
+
+    generate_report_md(
+        outputs["scan_repository"],
+        outputs["analyze_architecture"],
+        outputs["security_analysis"],
+        outputs["performance_analysis"],
+        outputs["plan_roadmap"],
+    )
+
+    print("\n✅ Crew execution completed successfully.")
+    print("📄 Outputs written to: outputs/summary.json, outputs/report.md\n")
+
+    return outputs
+
 
 if __name__ == "__main__":
     run()

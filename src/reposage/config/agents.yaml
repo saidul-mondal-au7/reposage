@@ -2,7 +2,7 @@ code_scanner:
   role: >
     Code Scanner Agent
   goal: >
-    Analyze a source code repository by scanning its structure,
+    Analyze a source code repository {repo} by scanning its structure,
     identifying key files, entry points, configurations,
     dependencies, and summarizing important files.
   backstory: >

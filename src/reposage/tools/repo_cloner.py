@@ -1,23 +1,42 @@
-import os
-from crewai.tools import tool
 import subprocess
+from pathlib import Path
+from crewai.tools import tool
+
 
 @tool("clone_repo")
 def clone_repo(repo_url: str, base_dir: str = "repos") -> str:
     """
-    Clone a GitHub repository if not already present.
-    Returns local path to the repo.
+    Clone a git repository safely using shallow clone.
+    Submodules are intentionally skipped.
     """
-    os.makedirs(base_dir, exist_ok=True)
-    repo_name = repo_url.rstrip("/").split("/")[-1]
-    repo_path = os.path.join(base_dir, repo_name)
+    base_path = Path(base_dir)
+    base_path.mkdir(parents=True, exist_ok=True)
 
-    if not os.path.exists(repo_path):
+    repo_name = repo_url.rstrip("/").split("/")[-1].replace(".git", "")
+    repo_path = base_path / repo_name
+
+    if repo_path.exists():
+        return str(repo_path)
+
+    try:
         subprocess.run(
-            ["git", "clone", repo_url, repo_path],
+            [
+                "git",
+                "clone",
+                "--depth", "1",
+                "--branch", "main",
+                "--single-branch",
+                "--no-tags",
+                "--recurse-submodules=no",  # 🔥 explicit
+                repo_url,
+                str(repo_path),
+            ],
             check=True,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
+            timeout=180,
         )
+    except subprocess.TimeoutExpired:
+        raise RuntimeError(f"Git clone timed out for {repo_url}")
+    except subprocess.CalledProcessError as e:
+        raise RuntimeError(f"Git clone failed: {e}")
 
-    return repo_path
+    return str(repo_path)
