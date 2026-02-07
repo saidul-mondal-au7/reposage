@@ -11,7 +11,7 @@ warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 
 def run():
     inputs = {
-        "repo": "https://github.com/saidul-mondal-au7/rag_medical_chatbot.git"
+        "repo": "https://github.com/saidul-mondal-au7/reposage.git"
     }
 
     # crew = RepoSageCrew().crew()
