@@ -1,33 +1,89 @@
 {
-  "repo_name": "profit_pilot",
-  "repo_path": "/Users/saidulmondal/Desktop/profit_pilot/profit_pilot",
+  "repo_name": "Job_recommender_system_with_MCP",
+  "repo_path": "/Users/saidulmondal/Desktop/profit_pilot/repoInsight/reposage/repos/Job_recommender_system_with_MCP",
   "detected_languages": [
     "Python"
   ],
-  "architecture_type": "modular monolith",
+  "architecture_type": "monolith",
   "repo_health": {
-    "total_files_scanned": 26,
+    "total_files_scanned": 7,
     "entry_points": [
-      "src/profitpilot/main.py"
+      "main.py"
     ],
     "main_directories": [
-      "0cc7bc76-2655-48f7-928a-887b0a154c19",
-      "7e248d17-dce1-40f9-aee3-ca40f353655b",
-      "config",
-      "embeddings",
-      "entities",
-      "knowledge",
-      "memory",
-      "output",
-      "profitpilot",
-      "src",
-      "tools"
+      "src"
     ],
     "dependency_files": [
-      "pyproject.toml"
+      "requirements.txt"
     ]
   },
-  "top_security_risks": [],
+  "top_security_risks": [
+    {
+      "issue": "Cannot determine insecure configuration or weak authentication/authorization due to lack of configuration files and no detailed source code provided.",
+      "severity": "Medium",
+      "file": "N/A"
+    },
+    {
+      "issue": "No detection of unsafe or exposed endpoints due to absence of detailed code or endpoint information.",
+      "severity": "Medium",
+      "file": "N/A"
+    },
+    {
+      "issue": "No explicit OWASP Top 10 vulnerabilities identified from the given scan and architecture summary due to limited source code access.",
+      "severity": "Medium",
+      "file": "N/A"
+    }
+  ],
   "top_performance_risks": [],
-  "top_roadmap_items": []
+  "top_roadmap_items": [
+    {
+      "priority": "P0",
+      "task": "Ensure no hardcoded secrets exist in the entire codebase by scanning beyond main.py",
+      "effort": "Low"
+    },
+    {
+      "priority": "P1",
+      "task": "Perform manual code review and provide additional source code and configuration files for authentication and authorization modules",
+      "effort": "Medium"
+    },
+    {
+      "priority": "P1",
+      "task": "Analyze src directory modules for endpoint definitions and validate authentication and authorization checks on those endpoints",
+      "effort": "Medium"
+    },
+    {
+      "priority": "P1",
+      "task": "Maintain asynchronous I/O operations and monitor database query patterns during ongoing development to prevent performance degradation",
+      "effort": "Low"
+    },
+    {
+      "priority": "P1",
+      "task": "Implement pagination for API endpoints or database queries returning large datasets as new features are developed",
+      "effort": "Medium"
+    }
+  ],
+  "health_score": {
+    "score": 72,
+    "grade": "B",
+    "breakdown": {
+      "security": 22,
+      "performance": 30,
+      "architecture": 10,
+      "hygiene": 10
+    }
+  },
+  "top_risky_files": [
+    {
+      "file": "/Users/saidulmondal/Desktop/profit_pilot/repoInsight/reposage/repos/Job_recommender_system_with_MCP/main.py",
+      "risk_score": 0,
+      "security_issues": 1,
+      "performance_issues": 0
+    },
+    {
+      "file": "/Users/saidulmondal/Desktop/profit_pilot/repoInsight/reposage/repos/Job_recommender_system_with_MCP/src",
+      "risk_score": 0,
+      "security_issues": 0,
+      "performance_issues": 3
+    }
+  ]
 }

@@ -1,13 +1,25 @@
-# reposage/health/badge.py
-
-def health_badge(score: int) -> str:
+def health_badge(score: int):
     if score >= 85:
-        color = "brightgreen"
+        return {
+            "emoji": "🟢",
+            "label": "Excellent",
+            "color": "green"
+        }
     elif score >= 70:
-        color = "yellow"
+        return {
+            "emoji": "🟡",
+            "label": "Good",
+            "color": "yellow"
+        }
     elif score >= 50:
-        color = "orange"
+        return {
+            "emoji": "🟠",
+            "label": "Fair",
+            "color": "orange"
+        }
     else:
-        color = "red"
-
-    return f"https://img.shields.io/badge/Repo%20Health-{score}%25-{color}"
+        return {
+            "emoji": "🔴",
+            "label": "Poor",
+            "color": "red"
+        }

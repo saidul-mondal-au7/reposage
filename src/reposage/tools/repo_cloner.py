@@ -2,7 +2,6 @@ import subprocess
 from pathlib import Path
 from crewai.tools import tool
 
-
 @tool("clone_repo")
 def clone_repo(repo_url: str, base_dir: str = "repos") -> str:
     """
@@ -17,7 +16,7 @@ def clone_repo(repo_url: str, base_dir: str = "repos") -> str:
 
     if repo_path.exists():
         return str(repo_path)
-
+    
     try:
         subprocess.run(
             [

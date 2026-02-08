@@ -3,10 +3,7 @@ from pathlib import Path
 import json
 from pydantic import BaseModel
 
-# from reposage.health.scorer import calculate_health_score
-# from reposage.health.badge import health_badge
-
-
+from reposage.health.risky_files import extract_top_risky_files
 
 # ==========================================================
 # Safe coercion (CrewAI 1.9.3 compatible)
@@ -204,6 +201,26 @@ def generate_report_md(
     )
     lines.append("### Runtime Flow\n")
     lines.append(f"{architecture.get('runtime_flow_summary', '')}\n")
+
+    # ==========================================================
+    # Top Risky Files
+    # ==========================================================
+    lines.append("\n## Top Risky Files\n")
+
+    risky_files = extract_top_risky_files(security, performance)
+
+    if not risky_files:
+        lines.append("No high-risk files detected.\n")
+    else:
+        lines.append("| # | File | Risk Score | Security Issues | Performance Issues |\n")
+        lines.append("|---|------|------------|-----------------|--------------------|\n")
+
+        for idx, rf in enumerate(risky_files, start=1):
+            lines.append(
+                f"| {idx} | {rf['file']} | {rf['risk_score']} | "
+                f"{rf['security_issues']} | {rf['performance_issues']} |\n"
+            )
+
 
     # ==========================================================
     # Roadmap

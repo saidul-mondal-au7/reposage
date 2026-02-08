@@ -6,7 +6,7 @@ from pathlib import Path
 from reposage.crew import RepoSageCrew
 from reposage.output.summary_generator import generate_summary_json
 from reposage.output.report_generator import generate_report_md
-# from reposage.output.report_pdf_generator import generate_report_pdf
+from reposage.output.report_pdf_generator import generate_report_pdf
 
 from reposage.output.normalize_output import normalize_output
 
@@ -93,13 +93,13 @@ def run():
         output_path=out_dir / "report.md",
     )
 
-    # generate_report_pdf(
-    #     outputs["scan_repository"],
-    #     outputs["analyze_architecture"],
-    #     outputs["security_analysis"],
-    #     outputs["performance_analysis"],
-    #     outputs["plan_roadmap"],
-    # )
+    generate_report_pdf(
+        outputs["scan_repository"],
+        outputs["analyze_architecture"],
+        outputs["security_analysis"],
+        outputs["performance_analysis"],
+        outputs["plan_roadmap"],
+    )
 
 
     print("\n✅ RepoSage execution completed")
@@ -108,8 +108,14 @@ def run():
     return outputs
 
 
-if __name__ == "__main__":
+def main():
+    from dotenv import load_dotenv
+    load_dotenv('.env')
     run()
+
+
+if __name__ == "__main__":
+    main()
 
 
 # python -m reposage.main \

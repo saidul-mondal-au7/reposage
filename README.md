@@ -26,6 +26,7 @@ It supports:
 - Output formats:
   - `summary.json`
   - `report.md`
+  - `report.pdf`
 
 ---
 
@@ -70,6 +71,7 @@ It supports:
 - Output formats:
   - `summary.json`
   - `report.md`
+  - `report.pdf`
 
 ---
 
@@ -92,44 +94,69 @@ It supports:
 - source venv/bin/activate
 
 - pip install crewai
-- pip install -r ../requirements.txt
+- pip install -r requirements.txt
 
 ## command
+
+- export OPENAI_API_KEY=your api key
+- export PYTHONPATH=$PWD/src
 
 - python -m reposage.main --repo https://github.com/saidul-mondal-au7/rag_medical_chatbot.git 
 or
 - python -m reposage.main --path ./my-local-repo
 
 ### Folder structure
-
+```text
 reposage/
-├── src/reposage/
-│   ├── config/
-│   │   ├── agents.yaml
-│   │   └── tasks.yaml
-│   ├── tools/
-│   ├── output/
-│   │   ├── summary_generator.py
-│   │   ├── report_generator.py
-│   │   
-│   ├── crew.py
-│   └── main.py
+├── src/
+│   └── reposage/
+│       ├── __init__.py
+│
+│       ├── config/
+│       │   ├── agents.yaml
+│       │   └── tasks.yaml
+│
+│       ├── tools/
+│       │   ├── __init__.py
+│       │   ├── repo_cloner.py          # clone_repo (main/master hardcoded)
+│       │   ├── file_scanner.py
+│       │   ├── file_classifier.py
+│       │   ├── language_detector.py
+│       │
+│       │   ├── security/
+│       │   │   ├── __init__.py
+│       │   │   ├── secret_scanner.py
+│       │   │   ├── auth_heuristics.py
+│       │   │   └── endpoint_heuristics.py
+│       │   │
+│       │   └── performance/
+│       │       ├── __init__.py
+│       │       ├── n_plus_one.py
+│       │       ├── pagination_check.py
+│       │       └── sync_io.py
+│
+│       ├── health/
+│       │   ├── __init__.py
+│       │   ├── scorer.py              # repo health score
+│       │   ├── badge.py               # health badge (🟢🟡🟠🔴)
+│       │   └── risky_files.py          # top risky files logic
+│
+│       ├── output/
+│       │   ├── __init__.py
+│       │   ├── normalize_output.py
+│       │   ├── summary_generator.py   # summary.json
+│       │   ├── report_generator.py    # report.md
+│       │   └── report_pdf_generator.py# report.pdf
+│
+│       ├── crew.py                    # CrewBase + agents + tasks
+│       └── main.py                    # CLI runner (repo / path)
+│
 ├── outputs/
 │   ├── summary.json
 │   ├── report.md
-│   
-├── .env
+│   └── report.pdf
+│
+├── .env                               # OPENAI_API_KEY
 ├── pyproject.toml
+├── requirements.txt
 └── README.md
-|__requirements.txt
-
-
-
-
-
-
-
-
-
-
-

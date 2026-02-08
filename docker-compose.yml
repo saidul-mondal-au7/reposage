@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  reposage:
+    build: .
+    image: reposage:latest
+    container_name: reposage
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+    volumes:
+      - ./outputs:/app/outputs
+    command:
+      - "--repo"
+      - "https://github.com/octocat/Hello-World"

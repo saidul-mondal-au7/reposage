@@ -1,6 +1,8 @@
 import json
 from pathlib import Path
 from pydantic import BaseModel
+from reposage.health.scorer import calculate_health_score
+from reposage.health.risky_files import extract_top_risky_files
 
 def _force_dict(obj):
     """
@@ -58,6 +60,11 @@ def generate_summary_json(
     repo_path = scan.get("repo_path") or "unknown"
     repo_name = Path(repo_path).name if repo_path != "unknown" else "unknown"
 
+    health = calculate_health_score(
+            scan, architecture, security, performance
+        )
+    top_risky_files = extract_top_risky_files(security, performance)
+
     # --------------------------------------------------
     # Build summary
     # --------------------------------------------------
@@ -105,6 +112,13 @@ def generate_summary_json(
                 + roadmap.get("short_term", [])
             )
         ][:5],
+        "health_score": {
+            "score": health["score"],
+            "grade": health["grade"],
+            "breakdown": health["breakdown"]
+        },
+        "top_risky_files": top_risky_files,
+
     }
 
     # --------------------------------------------------
